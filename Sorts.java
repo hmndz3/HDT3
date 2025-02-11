@@ -40,6 +40,12 @@ public class Sorts {
         radixSort(copia4);
         fin = System.nanoTime();
         System.out.println("Tiempo de RadixSort: " + (fin - inicio) / 1e9 + " segundos");
+
+         // Medir el tiempo de HeapSort
+         inicio = System.nanoTime();
+         heapSort(copia1);
+         fin = System.nanoTime();
+         System.out.println("Tiempo de HeapSort: " + (fin - inicio) / 1e9 + " segundos");       
     }
 
     public static List<Integer> leerNumerosDesdeArchivo(String nombreArchivo) {
@@ -144,4 +150,36 @@ public class Sorts {
             lista.set(i, output[i]);
         }
     }
+    // HeapSort
+    public static void heapSort(List<Integer> lista) {
+        int n = lista.size();
+
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heap(lista, n, i);
+        }
+
+        for (int i = n - 1; i > 0; i--) {
+            Collections.swap(lista, 0, i);
+            heap(lista, i, 0);
+        }
+    }
+
+    private static void heap(List<Integer> lista, int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && lista.get(left) > lista.get(largest)) {
+            largest = left;
+        }
+
+        if (right < n && lista.get(right) > lista.get(largest)) {
+            largest = right;
+        }
+
+        if (largest != i) {
+            Collections.swap(lista, i, largest);
+            heap(lista, n, largest);
+        }
+    }    
 }
